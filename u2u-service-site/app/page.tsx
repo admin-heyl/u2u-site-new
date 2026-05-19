@@ -3,9 +3,7 @@ import Link from "next/link";
 
 const navItems = [
   ["ABOUT", "#about"],
-  ["VISION", "#vision"],
   ["SERVICE", "#service"],
-  ["FAQ", "#faq"],
   ["CONTACT", "#contact"]
 ];
 
@@ -16,21 +14,6 @@ const serviceSeeds = [
   "新しいつながり",
   "自分らしい一歩",
   "居場所をつくる"
-];
-
-const faqs = [
-  {
-    q: "U⇔Uはどんな人に向けたサービスですか？",
-    a: "学生を中心に、誰かに伝えられることや、これから学びたいことを持つ人に向けて準備しています。"
-  },
-  {
-    q: "正式公開はいつですか？",
-    a: "現在は公開準備中です。機能や参加方法は、準備が整い次第このサイトでお知らせします。"
-  },
-  {
-    q: "法人や学校からの相談はできますか？",
-    a: "はい。連携や導入に関するご相談は、お問い合わせフォームからご連絡ください。"
-  }
 ];
 
 export default function Home() {
@@ -59,12 +42,6 @@ export default function Home() {
             教えること、学ぶこと、出会うこと。そのすべてが、自分らしい未来の輪郭になるように。
           </p>
           <div className="hero-actions">
-            <Link className="button primary" href="#contact">
-              お問い合わせ
-            </Link>
-            <Link className="button quiet" href="#vision">
-              想いを読む
-            </Link>
           </div>
         </div>
         <div className="hero-visual fade-in delay">
@@ -83,22 +60,10 @@ export default function Home() {
         <div className="two-column">
           <h2>自分の中にあるものが、誰かのきっかけになる。</h2>
           <p>
-            まだ名前のついていない得意。少しだけ先に進んだ経験。誰かに聞いてみたいこと。
-            U⇔Uは、そうした小さな可能性が、やわらかく行き交うためのサービスです。
+            U⇔Uは、学生に向けた新しいサービスを準備しています。
+            詳細は、公開まで今しばらくお待ちください。
           </p>
         </div>
-      </section>
-
-      <section className="section vision-band" id="vision">
-        <div>
-          <p className="section-label">VISION</p>
-          <h2>挑戦が、ひとりきりにならない未来へ。</h2>
-        </div>
-        <p>
-          学生時代の一歩は、ときに不確かで、ときにまぶしすぎるものです。
-          U⇔Uは、誰かの「やってみたい」と、別の誰かの「できるかもしれない」が出会うことで、
-          新しい居場所や選択肢が生まれていく未来を信じています。
-        </p>
       </section>
 
       <section className="section" id="service">
@@ -120,12 +85,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section quiet-story">
-        <p className="section-label">MESSAGE</p>
-        <blockquote>
-          うまく言葉にできない得意も、まだ自信のない挑戦も、
-          誰かと出会うことで少しずつ形になっていく。
-        </blockquote>
+      <section className="section sponsor">
+        <p className="section-label">SPONSOR</p>
+        <h2>広告掲載について</h2>
+        <p>
+          U⇔Uでは、学生向けサービス・ブランド様向けの
+          広告掲載を募集しています。
+        </p>
       </section>
 
       <section className="section faq" id="faq">
@@ -144,7 +110,7 @@ export default function Home() {
         <p className="section-label">CONTACT</p>
         <h2>U⇔Uについてのお問い合わせ</h2>
         <p>
-          連携、取材、公開前のご相談などは、HEYLのお問い合わせ窓口よりご連絡ください。
+          お問い合わせはこちらよりご連絡ください。
         </p>
         <a className="button primary" href="mailto:contact@heyl.co.jp">
           contact@heyl.co.jp
@@ -156,7 +122,7 @@ export default function Home() {
           <Link className="footer-brand" href="/">
             U⇔U
           </Link>
-          <p>HEYLが運営する、可能性とつながりのためのサービスです。</p>
+          <p>HEYLが運営する学生向けサービスです。</p>
         </div>
         <nav aria-label="法務ページ">
           <Link href="/legal/tokushoho">特定商取引法に基づく表記</Link>
