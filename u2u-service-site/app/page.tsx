@@ -56,57 +56,59 @@ export default function Home() {
       </section>
 
       <section className="section intro" id="about">
-        <p className="section-label">ABOUT</p>
-        <div className="two-column">
-          <h2>自分の中にあるものが、誰かのきっかけになる。</h2>
-          <p>
-            U⇔Uは、学生に向けた新しいサービスを準備しています。
-            詳細は、公開まで今しばらくお待ちください。
-          </p>
-        </div>
-      </section>
+  　　　　<p className="section-label">ABOUT</p>
 
-      <section className="section" id="service">
-        <p className="section-label">SERVICE</p>
-        <div className="section-head">
-          <h2>できることから、未来はひらく。</h2>
-          <p>
-            詳しい仕組みは、準備が整い次第お知らせします。
-            いまは、U⇔Uが大切にしたい体験の種を少しだけ。
-          </p>
-        </div>
-        <div className="seed-grid">
-          {serviceSeeds.map((seed, index) => (
-            <article className="seed-card" key={seed}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{seed}</h3>
-            </article>
-          ))}
-        </div>
-      </section>
+  　　　　<h2>自分の中にあるものが、誰かのきっかけになる。</h2>
 
-      <section className="section sponsor">
-  　　　　<p className="section-label">SPONSOR</p>
+  　　　　<p>
+    　　　　U⇔Uは、学生に向けた新しいサービスを準備しています。
+    　　　　詳細は、公開まで今しばらくお待ちください。
+  　　　　</p>
+　　　　</section>
 
-  　　　　<div className="two-column">
-    　　　　<h2>広告掲載について</h2>
+　　　　<section className="section" id="service">
+  　　　　<p className="section-label">SERVICE</p>
 
-    　　　　<p>
-      　　　　U⇔Uでは、学生向けサービス・ブランド様向けの広告掲載を募集しています。
-    　　　　</p>
+  　　　　<h2>できることから、未来はひらく。</h2>
+
+  　　　　<p>
+    　　　　詳しい仕組みは、準備が整い次第お知らせします。
+    　　　　いまは、U⇔Uが大切にしたい体験の種を少しだけ。
+  　　　　</p>
+
+  　　　　<div className="seed-grid">
+    　　　　{serviceSeeds.map((seed, index) => (
+      　　　　<article className="seed-card" key={seed}>
+        　　　　<span>{String(index + 1).padStart(2, "0")}</span>
+        　　　　<h3>{seed}</h3>
+      　　　　</article>
+    　　　　))}
   　　　　</div>
 　　　　</section>
 
-      <section className="section contact" id="contact">
-        <p className="section-label">CONTACT</p>
-        <h2>U⇔Uについてのお問い合わせ</h2>
-        <p>
-          お問い合わせはこちらよりご連絡ください。
-        </p>
-        <a className="button primary" href="mailto:contact@heyl.co.jp">
-          contact@heyl.co.jp
-        </a>
-      </section>
+　　　　<section className="section sponsor">
+  　　　　<p className="section-label">SPONSOR</p>
+
+  　　　　<h2>広告掲載について</h2>
+
+  　　　　<p>
+    　　　　U⇔Uでは、学生向けサービス・ブランド様向けの広告掲載を募集しています。
+  　　　　</p>
+　　　　</section>
+
+　　　　<section className="section contact" id="contact">
+  　　　　<p className="section-label">CONTACT</p>
+
+  　　　　<h2>U⇔Uについてのお問い合わせ</h2>
+
+  　　　　<p>
+    　　　　お問い合わせはこちらよりご連絡ください。
+  　　　　</p>
+
+  　　　　<a className="button primary" href="mailto:contact@heyl.co.jp">
+    　　　　contact@heyl.co.jp
+  　　　　</a>
+　　　　</section>
 
       <footer className="footer">
         <div>
