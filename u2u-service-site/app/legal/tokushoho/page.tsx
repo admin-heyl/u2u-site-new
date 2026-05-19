@@ -12,7 +12,9 @@ export default function TokushohoPage() {
   return (
     <main>
       <header className="legal-header">
-        <Link href="/">U⇔Uへ戻る</Link>
+        <Link href="/u2u" className="legal-back" aria-label="戻る">
+  　　　　　← Back
+        </Link>
         <p className="section-label">LEGAL</p>
         <h1>特定商取引法に基づく表記</h1>
       </header>
@@ -23,7 +25,7 @@ export default function TokushohoPage() {
         </section>
         <section>
           <h2>販売事業者</h2>
-          <p>株式会社HEYL</p>
+          <p>合同会社HEYL</p>
         </section>
         <section>
           <h2>所在地・連絡先</h2>
@@ -43,13 +45,13 @@ export default function TokushohoPage() {
         </section>
         <section>
           <h2>サービス提供時期</h2>
-          <p>購入後または双方合意後に提供</p>
+          <p>購入後または双方の合意後、サービスごとに定められた日時・内容に従って提供されます。</p>
         </section>
         <section>
           <h2>キャンセル・返金</h2>
           <p>
             サービスの性質上、提供開始後のキャンセルまたは返金は原則としてお受けできません。
-            ただし、法令または当社が別途定める条件に該当する場合を除きます。
+　　　　　　　　ただし、提供が行われなかった場合や、法令または当社が別途定める条件に該当する場合を除きます。
           </p>
         </section>
       </article>
