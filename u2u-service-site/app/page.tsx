@@ -88,12 +88,11 @@ export default function Home() {
       <section className="section sponsor">
   　　　　<p className="section-label">SPONSOR</p>
 
-  　　　　<div className="section-head">
+  　　　　<div className="two-column">
     　　　　<h2>広告掲載について</h2>
 
     　　　　<p>
-      　　　　U⇔Uでは、学生向けサービス・ブランド様向けの
-      　　　　広告掲載を募集しています。
+      　　　　U⇔Uでは、学生向けサービス・ブランド様向けの広告掲載を募集しています。
     　　　　</p>
   　　　　</div>
 　　　　</section>
