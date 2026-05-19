@@ -94,18 +94,6 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="section faq" id="faq">
-        <p className="section-label">FAQ</p>
-        <div className="faq-list">
-          {faqs.map((faq) => (
-            <details key={faq.q}>
-              <summary>{faq.q}</summary>
-              <p>{faq.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
       <section className="section contact" id="contact">
         <p className="section-label">CONTACT</p>
         <h2>U⇔Uについてのお問い合わせ</h2>
