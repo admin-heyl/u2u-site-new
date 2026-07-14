@@ -45,19 +45,15 @@ a {
   z-index: 10;
 }
 
-.brand,
-.footer-brand {
-  align-items: baseline;
+.brand {
+  align-items: center;
   display: inline-flex;
   gap: 10px;
 }
 
-.brand-mark,
-.footer-brand {
-  color: var(--main);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 28px;
-  font-weight: 700;
+.brand img {
+  height: auto;
+  width: 112px;
 }
 
 .brand-sub {
@@ -87,6 +83,11 @@ a {
 .desktop-nav a:hover {
   background: rgba(190, 132, 184, 0.14);
   color: var(--ink);
+}
+
+.menu-button,
+.mobile-nav {
+  display: none;
 }
 
 .hero {
@@ -136,6 +137,12 @@ h1 {
   letter-spacing: 0;
   line-height: 1.08;
   margin-bottom: 28px;
+}
+
+.hero-title {
+  font-size: clamp(24px, 3vw, 42px);
+  line-height: 1.35;
+  max-width: 680px;
 }
 
 h2 {
@@ -205,32 +212,22 @@ h3 {
   background: rgba(255, 255, 255, 0.58);
 }
 
-.seed-grid {
-  display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.service {
+  background: linear-gradient(135deg, rgba(190, 132, 184, 0.08), rgba(100, 121, 189, 0.08));
 }
 
-.seed-card {
-  background: rgba(255, 255, 255, 0.7);
+.coming-soon {
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid var(--line);
-  border-radius: 8px;
-  min-height: 180px;
-  padding: 24px;
-  transition: border-color 180ms ease, transform 180ms ease;
-}
-
-.seed-card:hover {
-  border-color: rgba(190, 132, 184, 0.45);
-  transform: translateY(-3px);
-}
-
-.seed-card span {
+  border-radius: 999px;
   color: var(--blue);
-  display: block;
-  font-size: 13px;
+  display: inline-flex;
+  font-size: 12px;
   font-weight: 700;
-  margin-bottom: 54px;
+  letter-spacing: 0.12em;
+  margin-bottom: 22px;
+  padding: 8px 14px;
+  text-transform: uppercase;
 }
 
 .intro,
@@ -281,6 +278,16 @@ h3 {
 .footer nav a {
   color: var(--muted);
   font-size: 13px;
+}
+
+.footer-brand {
+  display: inline-flex;
+  margin-bottom: 8px;
+}
+
+.footer-brand img {
+  height: auto;
+  width: 126px;
 }
 
 .legal-header,
@@ -385,11 +392,85 @@ h3 {
 
 @media (max-width: 900px) {
   .site-header {
+    align-items: center;
     position: absolute;
   }
 
   .desktop-nav {
     display: none;
+  }
+
+  .menu-button {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.84);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 46px;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    width: 46px;
+    z-index: 12;
+  }
+
+  .menu-button span {
+    background: var(--ink);
+    display: block;
+    height: 1px;
+    transition: transform 180ms ease, opacity 180ms ease;
+    width: 19px;
+  }
+
+  .menu-button.is-open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menu-button.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-button.is-open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    backdrop-filter: blur(22px);
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(43, 37, 48, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    padding: 74px 20px 20px;
+    pointer-events: none;
+    position: absolute;
+    right: clamp(20px, 5vw, 72px);
+    top: 16px;
+    transform: translateY(-8px);
+    transition: opacity 180ms ease, transform 180ms ease;
+    visibility: hidden;
+    width: min(320px, calc(100vw - 40px));
+    z-index: 11;
+  }
+
+  .mobile-nav.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .mobile-nav a {
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 15px;
+    padding: 15px 4px;
   }
 
   .hero {
@@ -404,10 +485,6 @@ h3 {
   .hero-visual {
     min-height: 300px;
     order: -1;
-  }
-
-  .seed-grid {
-    grid-template-columns: 1fr 1fr;
   }
 
   .footer {
@@ -427,6 +504,11 @@ h3 {
 
   h1 {
     font-size: 42px;
+  }
+
+  .hero-title {
+    font-size: 25px;
+    line-height: 1.45;
   }
 
   .lead,
@@ -466,15 +548,7 @@ h3 {
     width: 100%;
   }
 
-  .seed-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .seed-card {
-    min-height: 148px;
-  }
-
-  .seed-card span {
-    margin-bottom: 36px;
+  .brand img {
+    width: 100px;
   }
 }

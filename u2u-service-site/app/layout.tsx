@@ -3,13 +3,13 @@ import "./globals.css";
 import "./news.css";
 
 export const metadata: Metadata = {
-  title: "U⇔U | 可能性が、少しずつ広がっていく場所",
+  title: "U⇔U | 学生同士で「できる」がつながるスキルマーケット",
   description:
-    "U⇔Uは、学生の得意や挑戦が、誰かの一歩につながっていく未来を目指すHEYLのサービスです。",
+    "U⇔Uは、学生の得意・知識・経験を、ほかの学生の「やってみたい」につなぐスキルマーケットです。",
   metadataBase: new URL("https://u2u.heyl.co.jp"),
   openGraph: {
     title: "U⇔U",
-    description: "得意を活かし、教え合い、学び合う。可能性が少しずつ広がっていく場所。",
+    description: "学生同士で「できる」がつながるスキルマーケット。",
     url: "/",
     siteName: "U⇔U",
     images: ["/images/hero-u2u.png"],

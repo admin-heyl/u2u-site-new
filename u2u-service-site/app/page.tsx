@@ -1,48 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-
-const navItems = [
-  ["ABOUT", "#about"],
-  ["SERVICE", "#service"],
-  ["CONTACT", "#contact"]
-];
-
-const serviceSeeds = [
-  "得意を活かす",
-  "教える / 学ぶ",
-  "挑戦を分け合う",
-  "新しいつながり",
-  "自分らしい一歩",
-  "居場所をつくる"
-];
+import SiteHeader from "./components/SiteHeader";
 
 export default function Home() {
   return (
     <main>
-      <header className="site-header">
-        <Link className="brand" href="/" aria-label="U⇔U トップ">
-          <span className="brand-mark">U⇔U</span>
-          <span className="brand-sub">by HEYL</span>
-        </Link>
-        <nav className="desktop-nav" aria-label="メインナビゲーション">
-          {navItems.map(([label, href]) => (
-            <Link key={label} href={href}>
-              {label}
-            </Link>
-          ))}
-        </nav>
-      </header>
+      <SiteHeader />
 
       <section className="hero" id="top">
         <div className="hero-copy fade-in">
-          <p className="eyebrow">A place where small courage meets possibility.</p>
-          <h1>可能性が、少しずつ広がっていく。</h1>
+          <h1 className="hero-title">学生同士で「できる」がつながるスキルマーケット</h1>
           <p className="lead">
-            U⇔Uは、学生の得意や挑戦が、誰かの一歩につながっていく場所を目指しています。
-            教えること、学ぶこと、出会うこと。そのすべてが、自分らしい未来の輪郭になるように。
+            U⇔Uは、学生の得意・知識・経験を、ほかの学生の「やってみたい」につなぐスキルマーケットです。教えることも、学ぶことも、学生同士だからもっと身近に。
           </p>
-          <div className="hero-actions">
-          </div>
         </div>
         <div className="hero-visual fade-in delay">
           <Image
@@ -56,66 +26,43 @@ export default function Home() {
       </section>
 
       <section className="section intro" id="about">
-  　　　　<p className="section-label">ABOUT</p>
+        <p className="section-label">ABOUT</p>
+        <h2>学生同士だから、相談しやすい。学びやすい。</h2>
+        <p>
+          得意なことを活かしたい学生と、新しいことを学びたい学生が出会い、スキルや経験を届け合える場です。学ぶ側にも教える側にも、新しい選択肢が生まれる体験を提供します。
+        </p>
+      </section>
 
-  　　　　<h2>自分の中にあるものが、誰かのきっかけになる。</h2>
+      <section className="section service" id="service">
+        <p className="section-label">SERVICE</p>
+        <span className="coming-soon">Coming Soon</span>
+        <h2>スキルを届ける。見つける。つながる。</h2>
+        <p>
+          U⇔Uで体験できるサービスや機能について、詳しい情報をこちらでご紹介します。
+        </p>
+      </section>
 
-  　　　　<p>
-    　　　　U⇔Uは、学生に向けた新しいサービスを準備しています。
-    　　　　詳細は、公開まで今しばらくお待ちください。
-  　　　　</p>
-　　　　</section>
+      <section className="section sponsor">
+        <p className="section-label">SPONSOR</p>
+        <h2>広告掲載について</h2>
+        <p>U⇔Uでは、学生向けサービス・ブランド様向けの広告掲載を募集しています。</p>
+      </section>
 
-　　　　<section className="section" id="service">
-  　　　　<p className="section-label">SERVICE</p>
-
-  　　　　<h2>できることから、未来はひらく。</h2>
-
-  　　　　<p>
-    　　　　詳しい仕組みは、準備が整い次第お知らせします。
-    　　　　いまは、U⇔Uが大切にしたい体験の種を少しだけ。
-  　　　　</p>
-
-  　　　　<div className="seed-grid">
-    　　　　{serviceSeeds.map((seed, index) => (
-      　　　　<article className="seed-card" key={seed}>
-        　　　　<span>{String(index + 1).padStart(2, "0")}</span>
-        　　　　<h3>{seed}</h3>
-      　　　　</article>
-    　　　　))}
-  　　　　</div>
-　　　　</section>
-
-　　　　<section className="section sponsor">
-  　　　　<p className="section-label">SPONSOR</p>
-
-  　　　　<h2>広告掲載について</h2>
-
-  　　　　<p>
-    　　　　U⇔Uでは、学生向けサービス・ブランド様向けの広告掲載を募集しています。
-  　　　　</p>
-　　　　</section>
-
-　　　　<section className="section contact" id="contact">
-  　　　　<p className="section-label">CONTACT</p>
-
-  　　　　<h2>U⇔Uについてのお問い合わせ</h2>
-
-  　　　　<p>
-    　　　　お問い合わせはこちらよりご連絡ください。
-  　　　　</p>
-
-  　　　　<a className="button primary" href="mailto:contact@heyl.co.jp">
-    　　　　contact@heyl.co.jp
-  　　　　</a>
-　　　　</section>
+      <section className="section contact" id="contact">
+        <p className="section-label">CONTACT</p>
+        <h2>U⇔Uについてのお問い合わせ</h2>
+        <p>サービスや広告掲載に関するお問い合わせはこちらよりご連絡ください。</p>
+        <a className="button primary" href="mailto:contact@heyl.co.jp">
+          contact@heyl.co.jp
+        </a>
+      </section>
 
       <footer className="footer">
         <div>
-          <Link className="footer-brand" href="/">
-            U⇔U
+          <Link className="footer-brand" href="#top" aria-label="U⇔U ホーム">
+            <Image src="/images/u2u-logotype.svg" alt="U⇔U" width={168} height={51} />
           </Link>
-          <p>HEYLが運営する学生向けサービスです。</p>
+          <p>HEYLが運営する学生向けスキルマーケットです。</p>
         </div>
         <nav aria-label="法務ページ">
           <Link href="/legal/tokushoho">特定商取引法に基づく表記</Link>
