@@ -263,7 +263,7 @@ h3 {
 }
 
 .footer {
-  align-items: end;
+  align-items: flex-end;
   border-top: 1px solid var(--line);
   display: flex;
   gap: 32px;
@@ -313,10 +313,45 @@ h3 {
 
 .legal-body h2 {
   font-size: 22px;
+  line-height: 1.55;
+  margin-bottom: 16px;
 }
 
-.legal-body ul {
+.legal-body h3 {
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 24px 0 8px;
+}
+
+.legal-body ul,
+.legal-body ol {
+  margin: 12px 0 0;
   padding-left: 1.4em;
+}
+
+.legal-body li + li {
+  margin-top: 6px;
+}
+
+.legal-body p {
+  margin-bottom: 12px;
+}
+
+.legal-body p:last-child,
+.legal-body ul:last-child,
+.legal-body ol:last-child {
+  margin-bottom: 0;
+}
+
+.legal-body a {
+  color: var(--blue);
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.legal-lead {
+  padding: 0 0 32px;
 }
 
 .fade-in {
@@ -401,6 +436,29 @@ h3 {
   .legal-body li {
     font-size: 15px;
     line-height: 1.9;
+  }
+
+  .legal-header,
+  .legal-body {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .legal-header {
+    padding-top: 64px;
+  }
+
+  .legal-header h1 {
+    font-size: 32px;
+    overflow-wrap: anywhere;
+  }
+
+  .legal-body section {
+    padding: 24px 0;
+  }
+
+  .legal-body h2 {
+    font-size: 19px;
   }
 
   .hero-actions,
