@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   browserLocalPersistence,
   onAuthStateChanged,
@@ -86,6 +86,7 @@ function normalizeSlug(value: string) {
 }
 
 export function NewsCms() {
+  const [services, setServices] = useState<ReturnType<typeof getFirebaseServices> | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -94,25 +95,37 @@ export function NewsCms() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
 
-  const { auth, db, storage } = useMemo(() => getFirebaseServices(), []);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   useEffect(() => {
-    return onAuthStateChanged(auth, (currentUser) => {
+    try {
+      setServices(getFirebaseServices());
+    } catch {
+      setMessage("NEWS管理を利用するには、Firebaseの環境変数を設定してください。");
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!services) return;
+
+    return onAuthStateChanged(services.auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
-  }, [auth]);
+  }, [services]);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !services) return;
 
     loadArticles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, services]);
 
   async function loadArticles() {
-    const snapshot = await getDocs(query(collection(db, "newsArticles"), orderBy("publishedAt", "desc")));
+    if (!services) return;
+
+    const snapshot = await getDocs(query(collection(services.db, "newsArticles"), orderBy("publishedAt", "desc")));
     const nextArticles = snapshot.docs.map((item) => item.data() as NewsArticle);
     setArticles(nextArticles);
   }
@@ -120,8 +133,13 @@ export function NewsCms() {
   async function login(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setMessage("");
-    await setPersistence(auth, browserLocalPersistence);
-    await signInWithEmailAndPassword(auth, email, password);
+    if (!services) {
+      setMessage("NEWS管理を利用するには、Firebaseの環境変数を設定してください。");
+      return;
+    }
+
+    await setPersistence(services.auth, browserLocalPersistence);
+    await signInWithEmailAndPassword(services.auth, email, password);
   }
 
   function updateArticle(next: Partial<NewsArticle>) {
@@ -146,9 +164,13 @@ export function NewsCms() {
   }
 
   async function uploadImage(file: File) {
+    if (!services) {
+      throw new Error("Firebase client environment variables are missing.");
+    }
+
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
     const path = `news/${editing.slug || "draft"}/${Date.now()}-${safeName}`;
-    const storageRef = ref(storage, path);
+    const storageRef = ref(services.storage, path);
     await uploadBytes(storageRef, file);
     return getDownloadURL(storageRef);
   }
@@ -177,6 +199,11 @@ export function NewsCms() {
   }
 
   async function save(status: NewsStatus) {
+    if (!services) {
+      setMessage("NEWS管理を利用するには、Firebaseの環境変数を設定してください。");
+      return;
+    }
+
     const article = toSaveData(status);
 
     if (!article.slug || !article.title) {
@@ -185,7 +212,7 @@ export function NewsCms() {
     }
 
     await setDoc(
-      doc(db, "newsArticles", article.slug),
+      doc(services.db, "newsArticles", article.slug),
       {
         ...article,
         updatedAt: serverTimestamp()
@@ -199,8 +226,13 @@ export function NewsCms() {
   }
 
   async function removeArticle(slug: string) {
+    if (!services) {
+      setMessage("NEWS管理を利用するには、Firebaseの環境変数を設定してください。");
+      return;
+    }
+
     if (!window.confirm("この記事を削除しますか？")) return;
-    await deleteDoc(doc(db, "newsArticles", slug));
+    await deleteDoc(doc(services.db, "newsArticles", slug));
     await loadArticles();
     if (editing.slug === slug) setEditing(emptyArticle);
   }
@@ -241,7 +273,7 @@ export function NewsCms() {
           <p className="section-label">U⇔U CMS</p>
           <h1>NEWS管理</h1>
         </div>
-        <button type="button" onClick={() => signOut(auth)}>
+        <button type="button" onClick={() => services && signOut(services.auth)}>
           ログアウト
         </button>
       </header>
