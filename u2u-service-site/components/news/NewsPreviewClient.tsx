@@ -1,0 +1,191 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { getFirebaseServices } from "@/lib/firebase/client";
+import { formatNewsDate, type NewsArticle, type NewsBlock } from "@/lib/news";
+
+const X_URL = "https://x.com/u2u_heyl?s=11&t=1E18F495PWSj6a64j92s6A";
+const INSTAGRAM_URL = "https://www.instagram.com/u2u_heyl?igsh=bWtlM29rYnZ5NmY4&utm_source=qr";
+
+function renderNewsBlock(block: NewsBlock) {
+  switch (block.type) {
+    case "h2":
+      return <h2 key={block.id}>{block.text}</h2>;
+    case "h3":
+      return <h3 key={block.id}>{block.text}</h3>;
+    case "p":
+      return (
+        <p key={block.id}>
+          {block.text.split("\n").map((line, index) => (
+            <span key={`${block.id}-${index}`}>
+              {index > 0 ? <br /> : null}
+              {line}
+            </span>
+          ))}
+        </p>
+      );
+    case "strong": {
+      const strongClassName = block.id === "howto-extra" ? "news-emphasis" : "news-strong";
+      return (
+        <p className={strongClassName} key={block.id}>
+          <strong>{block.text}</strong>
+        </p>
+      );
+    }
+    case "ul":
+      return (
+        <ul key={block.id}>
+          {block.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      );
+    case "ol":
+      return (
+        <ol key={block.id}>
+          {block.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ol>
+      );
+    case "image":
+      return (
+        <figure className="news-article-image" key={block.id}>
+          <img src={block.src} alt={block.alt} />
+          {block.caption ? <figcaption>{block.caption}</figcaption> : null}
+        </figure>
+      );
+    case "link":
+      return (
+        <p className="news-text-link" key={block.id}>
+          <Link href={block.href}>{block.label}</Link>
+        </p>
+      );
+    case "button": {
+      return (
+        <p className="news-button-row" key={block.id}>
+          <a className="button primary" href={block.href}>
+            {block.label}
+          </a>
+        </p>
+      );
+    }
+    case "note":
+      return (
+        <aside className="news-note" key={block.id}>
+          <h3>{block.title}</h3>
+          <ul>
+            {block.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </aside>
+      );
+    default:
+      return null;
+  }
+}
+
+function renderExcerptLine(line: string) {
+  const target = "公式SNS（X・Instagram）";
+  const targetIndex = line.indexOf(target);
+
+  if (targetIndex === -1) {
+    return line;
+  }
+
+  const before = line.slice(0, targetIndex);
+  const after = line.slice(targetIndex + target.length);
+
+  return (
+    <>
+      {before}
+      公式SNS（
+      <a className="news-inline-link" href={X_URL}>
+        X
+      </a>
+      ・
+      <a className="news-inline-link" href={INSTAGRAM_URL}>
+        Instagram
+      </a>
+      ）
+      {after}
+    </>
+  );
+}
+
+export function NewsPreviewClient({ slug }: { slug: string }) {
+  const [article, setArticle] = useState<NewsArticle | null>(null);
+  const [status, setStatus] = useState("読み込み中...");
+
+  useEffect(() => {
+    const { auth, db } = getFirebaseServices();
+
+    return onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        setStatus("プレビューを見るには、管理画面へログインしてください。");
+        return;
+      }
+
+      const snapshot = await getDoc(doc(db, "newsArticles", slug));
+      if (!snapshot.exists()) {
+        setStatus("記事が見つかりません。");
+        return;
+      }
+
+      setArticle(snapshot.data() as NewsArticle);
+      setStatus("");
+    });
+  }, [slug]);
+
+  if (!article) {
+    return (
+      <main className="news-page">
+        <article className="news-article">
+          <Link className="news-back-link" href="/admin/news">
+            NEWS管理へ戻る
+          </Link>
+          <p className="news-preview-badge">PREVIEW</p>
+          <p>{status}</p>
+        </article>
+      </main>
+    );
+  }
+
+  return (
+    <main className="news-page">
+      <article className="news-article">
+        <Link className="news-back-link" href="/admin/news">
+          NEWS管理へ戻る
+        </Link>
+        <p className="news-preview-badge">PREVIEW / {article.status}</p>
+        <header className="news-article-header">
+          <p className="news-meta">
+            <span className="news-category">{article.category}</span>
+            <time dateTime={article.publishedAt}>{formatNewsDate(article.publishedAt)}</time>
+          </p>
+          <h1>{article.title}</h1>
+          <p>
+            {article.excerpt.split("\n").map((line, index) => (
+              <span key={`excerpt-${index}`}>
+                {index > 0 ? <br /> : null}
+                {renderExcerptLine(line)}
+              </span>
+            ))}
+          </p>
+        </header>
+
+        {article.eyecatch ? (
+          <figure className="news-eyecatch">
+            <img src={article.eyecatch.src} alt={article.eyecatch.alt} />
+          </figure>
+        ) : null}
+
+        <div className="news-body">{article.body.map(renderNewsBlock)}</div>
+      </article>
+    </main>
+  );
+}
