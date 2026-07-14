@@ -4,7 +4,7 @@ export default function PrivacyPage() {
   return (
     <main>
       <header className="legal-header">
-        <Link href="/">U⇔Uへ戻る</Link>
+        <Link href="/">〈 U⇔U</Link>
         <p className="section-label">LEGAL</p>
         <h1>プライバシーポリシー</h1>
       </header>

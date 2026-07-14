@@ -20,14 +20,11 @@ export default async function NewsListPage() {
     <main className="news-page">
       <header className="news-header">
         <Link className="news-back-link" href="/">
-          U⇔Uへ戻る
+          〈 U⇔U
         </Link>
         <p className="section-label">NEWS</p>
         <h1>お知らせ</h1>
-        <p>
-          リリース情報、キャンペーン、機能追加、アップデート、メンテナンスなど、
-          U⇔Uに関する最新情報をお届けします。
-        </p>
+        <p>リリース情報、キャンペーン、機能追加、アップデート、メンテナンスなど、U⇔Uに関する最新情報をお届けします。</p>
       </header>
 
       <section className="news-list" aria-label="お知らせ一覧">

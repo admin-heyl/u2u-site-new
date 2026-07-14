@@ -7,6 +7,15 @@
   --line: rgba(91, 71, 100, 0.14);
   --soft: #fbf7fb;
   --white: #ffffff;
+  --type-page-title: clamp(26px, 3.2vw, 38px);
+  --type-section-title: clamp(22px, 2.4vw, 30px);
+  --type-content-heading: clamp(19px, 2vw, 24px);
+  --type-subheading: clamp(17px, 1.7vw, 21px);
+  --type-body: 16px;
+  --leading-heading: 1.45;
+  --leading-body: 1.9;
+  --weight-heading: 650;
+  --space-section: clamp(64px, 8vw, 96px);
 }
 
 * {
@@ -115,7 +124,6 @@ a {
   max-width: 680px;
 }
 
-.eyebrow,
 .section-label {
   color: var(--rose);
   font-size: 12px;
@@ -132,39 +140,41 @@ p {
 }
 
 h1 {
-  font-size: clamp(44px, 6vw, 84px);
-  font-weight: 700;
+  font-size: var(--type-page-title);
+  font-weight: var(--weight-heading);
   letter-spacing: 0;
-  line-height: 1.08;
-  margin-bottom: 28px;
+  line-height: var(--leading-heading);
+  margin-bottom: 20px;
 }
 
 .hero-title {
-  font-size: clamp(24px, 3vw, 42px);
-  line-height: 1.35;
+  font-size: var(--type-page-title);
+  line-height: var(--leading-heading);
   max-width: 680px;
 }
 
 h2 {
-  font-size: clamp(30px, 4vw, 54px);
+  font-size: var(--type-section-title);
+  font-weight: var(--weight-heading);
   letter-spacing: 0;
-  line-height: 1.2;
-  margin-bottom: 0;
+  line-height: var(--leading-heading);
+  margin-bottom: 16px;
 }
 
 h3 {
-  font-size: 20px;
-  line-height: 1.45;
+  font-size: var(--type-subheading);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-heading);
+  margin-bottom: 12px;
 }
 
 .lead,
 .section p,
-.footer p,
 .legal-body p,
 .legal-body li {
   color: var(--muted);
-  font-size: 16px;
-  line-height: 2;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
 }
 
 .button {
@@ -205,7 +215,7 @@ h3 {
 }
 
 .section {
-  padding: clamp(72px, 10vw, 132px) clamp(20px, 5vw, 72px);
+  padding: var(--space-section) clamp(20px, 5vw, 72px);
 }
 
 .intro {
@@ -217,16 +227,12 @@ h3 {
 }
 
 .coming-soon {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid var(--line);
-  border-radius: 999px;
   color: var(--blue);
   display: inline-flex;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  margin-bottom: 22px;
-  padding: 8px 14px;
+  margin-bottom: 18px;
   text-transform: uppercase;
 }
 
@@ -241,7 +247,7 @@ h3 {
 .section h2,
 .sponsor h2,
 .contact h2 {
-  margin: 0 auto 24px;
+  margin: 0 auto 18px;
   max-width: 820px;
 }
 
@@ -260,12 +266,12 @@ h3 {
 }
 
 .footer {
-  align-items: flex-end;
+  align-items: center;
   border-top: 1px solid var(--line);
   display: flex;
   gap: 32px;
   justify-content: space-between;
-  padding: 42px clamp(20px, 5vw, 72px);
+  padding: 36px clamp(20px, 5vw, 72px);
 }
 
 .footer nav {
@@ -282,7 +288,6 @@ h3 {
 
 .footer-brand {
   display: inline-flex;
-  margin-bottom: 8px;
 }
 
 .footer-brand img {
@@ -294,18 +299,14 @@ h3 {
 .legal-body {
   margin: 0 auto;
   max-width: 920px;
-  padding: 96px 20px 24px;
+  padding: 80px 20px 22px;
 }
 
 .legal-header a {
   color: var(--blue);
   display: inline-block;
   font-size: 14px;
-  margin-bottom: 34px;
-}
-
-.legal-header h1 {
-  font-size: clamp(34px, 5vw, 58px);
+  margin-bottom: 28px;
 }
 
 .legal-body {
@@ -319,15 +320,15 @@ h3 {
 }
 
 .legal-body h2 {
-  font-size: 22px;
-  line-height: 1.55;
-  margin-bottom: 16px;
+  font-size: var(--type-content-heading);
+  line-height: var(--leading-heading);
+  margin-bottom: 14px;
 }
 
 .legal-body h3 {
-  font-size: 17px;
-  line-height: 1.7;
-  margin: 24px 0 8px;
+  font-size: var(--type-subheading);
+  line-height: var(--leading-heading);
+  margin: 22px 0 8px;
 }
 
 .legal-body ul,
@@ -502,18 +503,8 @@ h3 {
     display: none;
   }
 
-  h1 {
-    font-size: 42px;
-  }
-
-  .hero-title {
-    font-size: 25px;
-    line-height: 1.45;
-  }
-
   .lead,
   .section p,
-  .footer p,
   .legal-body p,
   .legal-body li {
     font-size: 15px;
@@ -531,16 +522,11 @@ h3 {
   }
 
   .legal-header h1 {
-    font-size: 32px;
     overflow-wrap: anywhere;
   }
 
   .legal-body section {
     padding: 24px 0;
-  }
-
-  .legal-body h2 {
-    font-size: 19px;
   }
 
   .hero-actions,

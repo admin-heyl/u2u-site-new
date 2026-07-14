@@ -4,9 +4,9 @@ export default function TermsPage() {
   return (
     <main>
       <header className="legal-header">
-        <Link href="/">U⇔Uへ戻る</Link>
+        <Link href="/">〈 U⇔U</Link>
         <p className="section-label">LEGAL</p>
-        <h1>U⇔U利用規約</h1>
+        <h1>利用規約</h1>
       </header>
       <article className="legal-body">
         <section>

@@ -27,7 +27,7 @@ export default function Home() {
 
       <section className="section intro" id="about">
         <p className="section-label">ABOUT</p>
-        <h2>学生同士だから、相談しやすい。学びやすい。</h2>
+        <h2>学生同士だから、相談しやすい。学びやすい</h2>
         <p>
           得意なことを活かしたい学生と、新しいことを学びたい学生が出会い、スキルや経験を届け合える場です。学ぶ側にも教える側にも、新しい選択肢が生まれる体験を提供します。
         </p>
@@ -36,7 +36,7 @@ export default function Home() {
       <section className="section service" id="service">
         <p className="section-label">SERVICE</p>
         <span className="coming-soon">Coming Soon</span>
-        <h2>スキルを届ける。見つける。つながる。</h2>
+        <h2>スキルを届ける。見つける。つながる</h2>
         <p>
           U⇔Uで体験できるサービスや機能について、詳しい情報をこちらでご紹介します。
         </p>
@@ -62,7 +62,6 @@ export default function Home() {
           <Link className="footer-brand" href="#top" aria-label="U⇔U ホーム">
             <Image src="/images/u2u-logotype.svg" alt="U⇔U" width={168} height={51} />
           </Link>
-          <p>HEYLが運営する学生向けスキルマーケットです。</p>
         </div>
         <nav aria-label="法務ページ">
           <Link href="/legal/tokushoho">特定商取引法に基づく表記</Link>
