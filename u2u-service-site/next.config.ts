@@ -13,6 +13,23 @@ const nextConfig: NextConfig = {
         source: "/preregister/:path*",
         destination: "https://unicorn1111.web.app/:path*",
       },
+      {
+        source: "/parent-invite",
+        destination: "https://unicorn1111.web.app/parent-invite",
+      },
+      {
+        source: "/parent-invite/:path*",
+        destination: "https://unicorn1111.web.app/parent-invite/:path*",
+      },
+      {
+        source: "/.well-known/apple-app-site-association",
+        destination:
+          "https://unicorn1111.web.app/.well-known/apple-app-site-association",
+      },
+      {
+        source: "/.well-known/assetlinks.json",
+        destination: "https://unicorn1111.web.app/.well-known/assetlinks.json",
+      },
     ];
   },
 };
