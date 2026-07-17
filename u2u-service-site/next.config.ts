@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
         destination: "https://unicorn1111.web.app/parent-invite/:path*",
       },
       {
+        source: "/reset-password",
+        destination: "https://unicorn1111.web.app/reset-password",
+      },
+      {
+        source: "/reset-password/:path*",
+        destination: "https://unicorn1111.web.app/reset-password/:path*",
+      },
+      {
         source: "/.well-known/apple-app-site-association",
         destination:
           "https://unicorn1111.web.app/.well-known/apple-app-site-association",
