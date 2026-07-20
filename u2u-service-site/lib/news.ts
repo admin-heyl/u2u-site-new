@@ -54,16 +54,16 @@ export const seedNewsArticles: NewsArticle[] = [
     title: "事前登録開始・公式SNS開設のお知らせ",
     publishedAt: "2026-07-24",
     excerpt:
-      "U⇔Uの事前登録を開始しました。\nあわせて、公式SNS（X・Instagram）を開設し、事前登録開始および公式SNS開設を記念したキャンペーンもスタートしました。",
+      "U⇔Uの事前登録を開始しました。\nあわせて、公式SNS（X・Instagram）を開設しました。\n事前登録開始および公式SNS開設を記念したキャンペーンもスタートしました。",
     eyecatch: {
-      src: "/images/news/u2u_x_preregistration.png",
+      src: "/images/news/u2u_preregistration.png",
       alt: "U⇔U 事前登録開始・公式アカウント開設記念 Amazonギフトカードプレゼントキャンペーン"
     },
     seo: {
       title: "事前登録開始・公式SNS開設のお知らせ | U⇔U TOPICS",
       description:
         "U⇔Uの事前登録開始と公式SNS開設を記念したキャンペーンもスタートしました。",
-      ogImage: "/images/news/u2u_x_preregistration.png"
+      ogImage: "/images/news/u2u_preregistration.png"
     },
     body: [
       { id: "campaign-heading", type: "h2", text: "キャンペーン概要" },
@@ -144,12 +144,6 @@ export const seedNewsArticles: NewsArticle[] = [
         id: "privacy",
         type: "p",
         text: "当選者から取得した個人情報は、本キャンペーンの運営、当選連絡および賞品送付等、本キャンペーンの実施に必要な範囲でのみ利用します。その他の取扱いについては、当社プライバシーポリシーをご確認ください。"
-      },
-      {
-        id: "privacy-link",
-        type: "link",
-        label: "プライバシーポリシーを確認する",
-        href: "/legal/privacy"
       },
       { id: "disclaimer-heading", type: "h3", text: "免責事項" },
       {
@@ -314,6 +308,11 @@ async function getFirestoreNewsArticles(status?: NewsStatus) {
     const articlesBySlug = new Map(seedNewsArticles.map((article) => [article.slug, article]));
 
     for (const article of firestoreArticles) {
+      const seedArticle = articlesBySlug.get(article.slug);
+      if (seedArticle && isUnlistedNewsArticle(seedArticle)) {
+        continue;
+      }
+
       articlesBySlug.set(article.slug, article);
     }
 

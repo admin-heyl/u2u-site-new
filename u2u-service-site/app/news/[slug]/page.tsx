@@ -10,12 +10,33 @@ import {
 
 const X_URL = "https://x.com/u2u_heyl?s=11&t=1E18F495PWSj6a64j92s6A";
 const INSTAGRAM_URL = "https://www.instagram.com/u2u_heyl?igsh=bWtlM29rYnZ5NmY4&utm_source=qr";
+const PRIVACY_POLICY_PATH = "/legal/privacy";
 
 type NewsDetailPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
+
+function renderLinkedText(text: string) {
+  const target = "プライバシーポリシー";
+  const parts = text.split(target);
+
+  if (parts.length === 1) {
+    return text;
+  }
+
+  return parts.map((part, index) => (
+    <span key={`${part}-${index}`}>
+      {part}
+      {index < parts.length - 1 ? (
+        <Link className="news-inline-link" href={PRIVACY_POLICY_PATH}>
+          {target}
+        </Link>
+      ) : null}
+    </span>
+  ));
+}
 
 export function generateStaticParams() {
   return [];
@@ -60,7 +81,7 @@ function renderNewsBlock(block: NewsBlock) {
           {block.text.split("\n").map((line, index) => (
             <span key={`${block.id}-${index}`}>
               {index > 0 ? <br /> : null}
-              {line}
+              {renderLinkedText(line)}
             </span>
           ))}
         </p>
