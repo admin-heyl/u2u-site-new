@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, type User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { getFirebaseServices } from "@/lib/firebase/client";
 import { formatNewsDate, type NewsArticle, type NewsBlock } from "@/lib/news";
@@ -145,7 +145,7 @@ export function NewsPreviewClient({ slug }: { slug: string }) {
   useEffect(() => {
     const { auth, db } = getFirebaseServices();
 
-    return onAuthStateChanged(auth, async (user) => {
+    return onAuthStateChanged(auth, async (user: User | null) => {
       if (!user) {
         setStatus("プレビューを見るには、管理画面へログインしてください。");
         return;

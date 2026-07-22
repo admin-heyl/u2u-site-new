@@ -67,6 +67,7 @@ export default function Home() {
           <Link href="/legal/tokushoho">特定商取引法に基づく表記</Link>
           <Link href="/legal/terms">利用規約</Link>
           <Link href="/legal/privacy">プライバシーポリシー</Link>
+          <Link href="/account-delete">アカウント削除</Link>
         </nav>
       </footer>
     </main>

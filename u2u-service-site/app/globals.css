@@ -362,6 +362,23 @@ h3 {
   padding: 0 0 32px;
 }
 
+.account-delete-request {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding-left: clamp(18px, 4vw, 32px) !important;
+  padding-right: clamp(18px, 4vw, 32px) !important;
+}
+
+.account-delete-button {
+  margin: 10px 0 18px;
+  text-decoration: none !important;
+}
+
+.account-delete-note {
+  font-size: 14px !important;
+}
+
 .fade-in {
   animation: fadeIn 820ms ease both;
 }

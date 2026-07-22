@@ -19,7 +19,6 @@ import {
   serverTimestamp,
   setDoc
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getFirebaseServices } from "@/lib/firebase/client";
 import type { NewsArticle, NewsBlock, NewsCategory, NewsStatus } from "@/lib/news";
 import { seedNewsArticles } from "@/lib/news";
@@ -109,7 +108,7 @@ export function NewsCms() {
   useEffect(() => {
     if (!services) return;
 
-    return onAuthStateChanged(services.auth, (currentUser) => {
+    return onAuthStateChanged(services.auth, (currentUser: User | null) => {
       setUser(currentUser);
       setLoading(false);
     });
@@ -168,11 +167,16 @@ export function NewsCms() {
       throw new Error("Firebase client environment variables are missing.");
     }
 
+    const storageModule = (await import("firebase/storage")) as unknown as {
+      getDownloadURL: (storageRef: unknown) => Promise<string>;
+      ref: (storage: unknown, path: string) => unknown;
+      uploadBytes: (storageRef: unknown, file: File) => Promise<unknown>;
+    };
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
     const path = `news/${editing.slug || "draft"}/${Date.now()}-${safeName}`;
-    const storageRef = ref(services.storage, path);
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
+    const storageRef = storageModule.ref(services.storage, path);
+    await storageModule.uploadBytes(storageRef, file);
+    return storageModule.getDownloadURL(storageRef);
   }
 
   async function handleImageUpload(file: File, onUrl: (url: string) => void) {
