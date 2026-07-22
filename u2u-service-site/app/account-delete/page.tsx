@@ -8,13 +8,7 @@ const DELETE_REQUEST_MAILTO =
 export const metadata: Metadata = {
   title: "アカウント削除について | U⇔U",
   description:
-    "U⇔Uのアプリ内退会手続き、削除対象データ、保持される場合があるデータ、アプリを利用できない場合の代替手段についてご案内します。",
-  openGraph: {
-    title: "アカウント削除について | U⇔U",
-    description:
-      "U⇔Uのアプリ内退会手続きと、アプリを利用できない場合の代替手段をご案内します。",
-    url: "/account-delete"
-  }
+    "U⇔Uのアプリ内退会手続き、削除対象データ、保持される場合があるデータ、アプリを利用できない場合の代替手段についてご案内します。"
 };
 
 export default function AccountDeletePage() {

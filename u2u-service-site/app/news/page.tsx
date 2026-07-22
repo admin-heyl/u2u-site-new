@@ -4,13 +4,7 @@ import { formatNewsDate, getPublishedNewsArticles } from "@/lib/news";
 
 export const metadata: Metadata = {
   title: "NEWS | U⇔U",
-  description: "U⇔Uからのお知らせ、キャンペーン、アップデート、メンテナンス情報を掲載します。",
-  openGraph: {
-    title: "NEWS | U⇔U",
-    description: "U⇔Uからのお知らせ、キャンペーン、アップデート、メンテナンス情報を掲載します。",
-    url: "/news",
-    images: ["/images/news/campaign-preregistration.svg"]
-  }
+  description: "U⇔Uからのお知らせ、キャンペーン、アップデート、メンテナンス情報を掲載します。"
 };
 
 export default async function NewsListPage() {

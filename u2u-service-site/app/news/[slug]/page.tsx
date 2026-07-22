@@ -59,13 +59,7 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
             index: false,
             follow: false
           }
-        : undefined,
-    openGraph: {
-      title: article.seo.title,
-      description: article.seo.description,
-      url: `/news/${article.slug}`,
-      images: article.seo.ogImage ? [article.seo.ogImage] : undefined
-    }
+        : undefined
   };
 }
 

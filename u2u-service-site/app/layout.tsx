@@ -15,7 +15,38 @@ export const metadata: Metadata = {
     images: ["/images/hero-u2u.png"],
     locale: "ja_JP",
     type: "website"
-  }
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "U⇔U",
+    description: "学生同士で「できる」がつながるスキルマーケット。",
+    images: ["/images/hero-u2u.png"]
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icons/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icons/icon-192.png", type: "image/png", sizes: "192x192" }
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }
+    ],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/icons/safari-pinned-tab.svg",
+        color: "#8F70A8"
+      }
+    ]
+  },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "U⇔U",
+    statusBarStyle: "default"
+  },
+  applicationName: "U⇔U"
 };
 
 export default function RootLayout({
