@@ -24,18 +24,26 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icons/favicon-32.png", type: "image/png", sizes: "32x32" },
-      { url: "/icons/icon-192.png", type: "image/png", sizes: "192x192" }
+      { url: "/icons/icon-192.png?v=20260723", type: "image/png", sizes: "192x192" },
+      { url: "/apple-touch-icon.png?v=20260723", type: "image/png", sizes: "180x180" },
+      { url: "/icons/favicon-32.png?v=20260723", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.ico?v=20260723", sizes: "any" }
     ],
-    shortcut: "/favicon.ico",
+    shortcut: [
+      { url: "/icons/icon-192.png?v=20260723", type: "image/png", sizes: "192x192" }
+    ],
     apple: [
-      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }
+      { url: "/apple-touch-icon.png?v=20260723", type: "image/png", sizes: "180x180" }
     ],
     other: [
       {
+        rel: "apple-touch-icon-precomposed",
+        url: "/apple-touch-icon.png?v=20260723",
+        sizes: "180x180"
+      },
+      {
         rel: "mask-icon",
-        url: "/icons/safari-pinned-tab.svg",
+        url: "/icons/safari-pinned-tab.svg?v=20260723",
         color: "#8F70A8"
       }
     ]
