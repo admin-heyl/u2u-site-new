@@ -8,6 +8,7 @@ const navItems = [
   ["ホーム", "#top"],
   ["サービスについて", "#about"],
   ["サービス紹介", "#service"],
+  ["NEWS", "/news"],
   ["お問い合わせ", "#contact"]
 ];
 

@@ -52,8 +52,8 @@ export default function Home() {
         <p className="section-label">CONTACT</p>
         <h2>U⇔Uについてのお問い合わせ</h2>
         <p>サービスや広告掲載に関するお問い合わせはこちらよりご連絡ください。</p>
-        <a className="button primary" href="mailto:contact@heyl.co.jp">
-          contact@heyl.co.jp
+        <a className="button primary" href="mailto:contact@u2u.heyl.co.jp">
+          contact@u2u.heyl.co.jp
         </a>
       </section>
 
@@ -64,6 +64,7 @@ export default function Home() {
           </Link>
         </div>
         <nav aria-label="法務ページ">
+          <Link href="/news">NEWS</Link>
           <Link href="/legal/tokushoho">特定商取引法に基づく表記</Link>
           <Link href="/legal/terms">利用規約</Link>
           <Link href="/legal/privacy">プライバシーポリシー</Link>

@@ -3,6 +3,15 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || undefined,
   trailingSlash: false,
+  async redirects() {
+    return [
+      {
+        source: "/news/pre-registration-official-sns",
+        destination: "/news/pre-registration-sns",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

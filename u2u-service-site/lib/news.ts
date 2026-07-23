@@ -47,9 +47,9 @@ export type NewsArticle = {
 
 export const seedNewsArticles: NewsArticle[] = [
   {
-    slug: "pre-registration-official-sns",
+    slug: "pre-registration-sns",
     status: "published",
-    visibility: "unlisted",
+    visibility: "listed",
     category: "キャンペーン",
     title: "事前登録開始・公式SNS開設のお知らせ",
     publishedAt: "2026-07-24",
@@ -171,7 +171,7 @@ export const seedNewsArticles: NewsArticle[] = [
       {
         id: "amazon-notes-1",
         type: "p",
-        text: "本キャンペーンは合同会社HEYLが実施するものであり、Amazonでは本キャンペーンに関するお問い合わせを受け付けておりません。\nお問い合わせは support@heyl.co.jp までお願いいたします。"
+        text: "本キャンペーンは合同会社HEYLが実施するものであり、Amazonでは本キャンペーンに関するお問い合わせを受け付けておりません。\nお問い合わせは support@u2u.heyl.co.jp までお願いいたします。"
       },
       {
         id: "amazon-notes-2",

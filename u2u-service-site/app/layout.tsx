@@ -1,6 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./news.css";
+
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF"
+};
 
 export const metadata: Metadata = {
   title: "U⇔U | 学生同士で「できる」がつながるスキルマーケット",
@@ -44,7 +48,7 @@ export const metadata: Metadata = {
       {
         rel: "mask-icon",
         url: "/icons/safari-pinned-tab.svg?v=20260723",
-        color: "#8F70A8"
+        color: "#FFFFFF"
       }
     ]
   },

@@ -14,7 +14,7 @@ export default function TokushohoPage() {
           <p>代表社員：瀬戸西 彩夏</p>
           <p>代表社員：尾島 久瑠美</p>
           <p>所在地：神奈川県藤沢市白旗1-12-31</p>
-          <p>メールアドレス：support@heyl.co.jp</p>
+          <p>メールアドレス：support@u2u.heyl.co.jp</p>
           <p>サービス名：U⇔U（ユーーズ）</p>
         </section>
 

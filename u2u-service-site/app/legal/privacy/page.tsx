@@ -147,7 +147,7 @@ export default function PrivacyPage() {
           <p>代表社員：瀬戸西 彩夏</p>
           <p>代表社員：尾島 久瑠美</p>
           <p>住所：神奈川県藤沢市白旗1-12-31</p>
-          <p>メールアドレス：support@heyl.co.jp</p>
+          <p>メールアドレス：support@u2u.heyl.co.jp</p>
           <p>電話番号：</p>
           <p>制定日：2026年7月12日</p>
         </section>
