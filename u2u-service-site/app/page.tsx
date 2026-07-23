@@ -9,7 +9,7 @@ export default function Home() {
 
       <section className="hero" id="top">
         <div className="hero-copy fade-in">
-          <h1 className="hero-title">学生同士で「できる」がつながるスキルマーケット</h1>
+          <h1 className="hero-title">学生同士の「できる」がつながるスキルマーケット</h1>
           <p className="lead">
             U⇔Uは、学生の得意・知識・経験を、ほかの学生の「やってみたい」につなぐスキルマーケットです。教えることも、学ぶことも、学生同士だからもっと身近に。
           </p>
@@ -55,6 +55,9 @@ export default function Home() {
         <a className="button primary" href="mailto:contact@u2u.heyl.co.jp">
           contact@u2u.heyl.co.jp
         </a>
+        <p className="contact-support-link">
+          <Link href="/account-delete">アカウント削除について</Link>
+        </p>
       </section>
 
       <footer className="footer">
@@ -68,7 +71,6 @@ export default function Home() {
           <Link href="/legal/tokushoho">特定商取引法に基づく表記</Link>
           <Link href="/legal/terms">利用規約</Link>
           <Link href="/legal/privacy">プライバシーポリシー</Link>
-          <Link href="/account-delete">アカウント削除</Link>
         </nav>
       </footer>
     </main>

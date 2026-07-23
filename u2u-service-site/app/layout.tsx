@@ -7,13 +7,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "U⇔U | 学生同士で「できる」がつながるスキルマーケット",
+  title: "U⇔U | 学生同士の「できる」がつながるスキルマーケット",
   description:
     "U⇔Uは、学生の得意・知識・経験を、ほかの学生の「やってみたい」につなぐスキルマーケットです。",
   metadataBase: new URL("https://u2u.heyl.co.jp"),
   openGraph: {
     title: "U⇔U",
-    description: "学生同士で「できる」がつながるスキルマーケット。",
+    description: "学生同士の「できる」がつながるスキルマーケット。",
     url: "/",
     siteName: "U⇔U",
     images: ["/images/hero-u2u.png"],
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "U⇔U",
-    description: "学生同士で「できる」がつながるスキルマーケット。",
+    description: "学生同士の「できる」がつながるスキルマーケット。",
     images: ["/images/hero-u2u.png"]
   },
   icons: {

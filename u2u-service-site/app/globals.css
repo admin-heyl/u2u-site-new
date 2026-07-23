@@ -265,6 +265,19 @@ h3 {
   max-width: 680px;
 }
 
+.contact-support-link {
+  margin-top: 18px !important;
+  margin-bottom: 0 !important;
+}
+
+.contact-support-link a {
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
 .footer {
   align-items: center;
   border-top: 1px solid var(--line);
