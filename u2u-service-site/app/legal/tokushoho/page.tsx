@@ -49,9 +49,6 @@ export default function TokushohoPage() {
           <p>以下の方法によりお支払いいただけます。</p>
           <ul>
             <li>クレジットカード決済</li>
-            <li>Apple Pay</li>
-            <li>Google Pay</li>
-            <li>コンビニ決済</li>
           </ul>
           <p>決済処理にはStripe社の決済サービスを利用します。</p>
         </section>
