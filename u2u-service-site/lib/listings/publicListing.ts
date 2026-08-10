@@ -1,12 +1,12 @@
-import { getFirestoreDocument } from "./firestore";
+import { getFirestoreDocument, getPublishedReviewSummary } from "./firestore";
 
 export type ListingType = "skill" | "request";
 
 export type PublicProfile = {
   name: string;
   photoUrl: string;
-  schoolType: string;
-  schoolYearLabel: string;
+  rating: number;
+  ratingCount: number;
 };
 
 export type PublicListing = {
@@ -15,12 +15,17 @@ export type PublicListing = {
   label: "ForU" | "FromU";
   title: string;
   description: string;
+  requiredItems: string;
+  precautions: string;
   priceLabel: string;
   category: string;
   subCategory: string;
   lessonMethodLabel: string;
-  durationLabel: string;
-  deliveryEstimateLabel: string;
+  timeLabel: string;
+  deliveryLabel: string;
+  favoriteCount: number;
+  primaryStatLabel: string;
+  secondaryStatLabel: string;
   images: string[];
   profile: PublicProfile;
   canonicalUrl: string;
@@ -52,6 +57,56 @@ const FROMU_CLOSED_STATUSES = new Set([
 
 const BLOCKED_ACCOUNT_STATUSES = new Set(["suspended", "frozen", "deleting", "deleted"]);
 
+const CATEGORY_LABELS: Record<string, string> = {
+  study: "勉強",
+  creative: "クリエイティブ",
+  sports: "スポーツ",
+  beauty: "美容",
+  entertainment: "エンタメ",
+  it: "IT",
+  life: "生活",
+  support: "サポート"
+};
+
+const SUB_CATEGORY_LABELS: Record<string, string> = {
+  japanese: "国語",
+  math: "算数・数学",
+  english: "英語",
+  science: "理科",
+  social: "社会",
+  it_subject: "情報",
+  other: "その他",
+  illustration: "イラスト",
+  design: "デザイン",
+  photo: "写真",
+  video: "動画制作",
+  music: "音楽制作",
+  writing: "文章・作文",
+  training: "トレーニング",
+  makeup: "メイク",
+  hair: "ヘアアレンジ",
+  skincare: "スキンケア",
+  coordinate: "コーディネート",
+  instrument: "楽器",
+  singing: "歌",
+  dance: "ダンス",
+  game: "ゲーム",
+  streaming: "配信・動画活動",
+  programming: "プログラミング",
+  web: "Web制作",
+  app: "アプリ開発",
+  cooking: "料理",
+  cleaning: "掃除",
+  laundry: "洗濯",
+  sewing: "裁縫",
+  career: "進路",
+  school: "学校・不登校",
+  relationship: "人間関係",
+  love: "恋愛",
+  mental: "メンタル面",
+  chat: "雑談"
+};
+
 function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
@@ -73,9 +128,23 @@ function toNumber(value: unknown): number | null {
 }
 
 function toMillis(value: unknown): number | null {
-  if (typeof value !== "string" || !value) return null;
-  const millis = new Date(value).getTime();
-  return Number.isFinite(millis) ? millis : null;
+  if (value instanceof Date) return value.getTime();
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string" && value) {
+    const millis = new Date(value).getTime();
+    return Number.isFinite(millis) ? millis : null;
+  }
+
+  const record = objectRecord(value);
+  if (!record) return null;
+
+  if (typeof record.toDate === "function") {
+    const date = (record.toDate as () => unknown)();
+    return date instanceof Date ? date.getTime() : null;
+  }
+
+  const seconds = toNumber(record.seconds ?? record._seconds);
+  return seconds === null ? null : seconds * 1000;
 }
 
 function safeUrl(value: unknown): string {
@@ -167,6 +236,60 @@ function durationLabel(value: unknown, label: "所要時間" | "希望時間"): 
   return `${label}: ${Math.round(minutes)}分`;
 }
 
+function count(value: unknown): number {
+  const number = toNumber(value);
+  return number === null ? 0 : Math.max(0, Math.round(number));
+}
+
+function categoryLabel(value: string, labels: Record<string, string>) {
+  return labels[value] || value;
+}
+
+function formatDeliveryEstimate(value: unknown) {
+  const raw = text(value);
+  if (!raw) return "相談して決定";
+  return raw.replace(/^[～~]/, "〜").replaceAll("以内", "");
+}
+
+function formatDesiredDeliveryDate(desiredValue: unknown, createdValue: unknown) {
+  const desiredMillis = toMillis(desiredValue);
+  if (desiredMillis === null) return "相談して決定";
+
+  const createdMillis = toMillis(createdValue) ?? Date.now();
+  const days = Math.floor((desiredMillis - createdMillis) / 86_400_000);
+  if (days <= 3) return "〜3日";
+  if (days <= 7) return "〜1週間";
+  if (days <= 14) return "〜2週間";
+  return "〜1か月";
+}
+
+function recruitmentDeadlineLabel(data: Record<string, unknown>) {
+  const explicitDeadline = toMillis(data.recruitmentDeadlineAt);
+  const createdAt = toMillis(data.createdAt);
+  const recruitmentDays = count(data.recruitmentPeriodDays) || 3;
+  const deadline = explicitDeadline ??
+    (createdAt === null ? null : createdAt + recruitmentDays * 86_400_000);
+
+  if (deadline === null || deadline <= Date.now()) return "公開終了";
+
+  const dateKey = (millis: number) => {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Tokyo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).formatToParts(new Date(millis));
+    const part = (type: Intl.DateTimeFormatPartTypes) =>
+      Number(parts.find((item) => item.type === type)?.value || 0);
+    return Date.UTC(part("year"), part("month") - 1, part("day"));
+  };
+  const remainingDays = Math.max(
+    0,
+    Math.round((dateKey(deadline) - dateKey(Date.now())) / 86_400_000)
+  );
+  return remainingDays === 0 ? "本日まで" : `あと${remainingDays}日`;
+}
+
 function isPublishedBase(data: Record<string, unknown>): boolean {
   const status = text(data.status).toLowerCase();
   return (
@@ -204,7 +327,11 @@ function isPublicRequest(data: Record<string, unknown>): boolean {
     return false;
   }
 
-  const deadlineMillis = toMillis(data.recruitmentDeadlineAt);
+  const createdAtMillis = toMillis(data.createdAt);
+  const recruitmentDays = count(data.recruitmentPeriodDays) || 3;
+  const deadlineMillis =
+    toMillis(data.recruitmentDeadlineAt) ??
+    (createdAtMillis === null ? null : createdAtMillis + recruitmentDays * 86_400_000);
   return deadlineMillis === null || deadlineMillis > Date.now();
 }
 
@@ -220,17 +347,22 @@ async function isOwnerPubliclyAvailable(uid: string) {
 
 async function publicProfile(uid: string): Promise<PublicProfile> {
   if (!uid) {
-    return { name: "ユーザー", photoUrl: "", schoolType: "", schoolYearLabel: "" };
+    return { name: "ユーザー", photoUrl: "", rating: 0, ratingCount: 0 };
   }
 
-  const data = (await getFirestoreDocument("publicUsers", uid)) || {};
-  const isSchoolPublic = data.isSchoolPublic === true;
+  const [data, reviewSummary] = await Promise.all([
+    getFirestoreDocument("publicUsers", uid),
+    getPublishedReviewSummary(uid).catch(() => ({ rating: 0, count: 0 }))
+  ]);
+  const publicUser = data || {};
 
   return {
-    name: firstString([data.displayName, data.nickname, data.name]) || "ユーザー",
-    photoUrl: safeExternalImageUrl(firstString([data.photoUrl, data.imageUrl, data.iconUrl])),
-    schoolType: isSchoolPublic ? text(data.schoolType) : "",
-    schoolYearLabel: isSchoolPublic ? firstString([data.schoolYearLabel, data.schoolYear]) : ""
+    name: firstString([publicUser.displayName, publicUser.nickname, publicUser.name]) || "ユーザー",
+    photoUrl: safeExternalImageUrl(
+      firstString([publicUser.photoUrl, publicUser.imageUrl, publicUser.iconUrl])
+    ),
+    rating: reviewSummary.rating,
+    ratingCount: reviewSummary.count
   };
 }
 
@@ -254,14 +386,10 @@ export function metadataDescription(listing: PublicListing) {
 
 export function listingInfoRows(listing: PublicListing) {
   return [
-    [listing.type === "skill" ? "価格" : "予算", listing.priceLabel],
-    ["カテゴリ", [listing.category, listing.subCategory].filter(Boolean).join(" / ")],
+    ["カテゴリー", [listing.category, listing.subCategory].filter(Boolean).join(" / ")],
     ["実施形式", listing.lessonMethodLabel],
-    [
-      listing.type === "skill" ? "所要時間" : "希望時間",
-      listing.durationLabel.replace(/^[^:]+: /, "")
-    ],
-    ["納期目安", listing.deliveryEstimateLabel]
+    [listing.type === "skill" ? "所要時間" : "希望時間", listing.timeLabel],
+    [listing.type === "skill" ? "納期目安" : "希望納期", listing.deliveryLabel]
   ].filter((row): row is [string, string] => Boolean(row[1]));
 }
 
@@ -284,24 +412,52 @@ export async function getPublicListing(type: ListingType, id: string) {
   const title = text(data.title);
   if (!title) return null;
 
+  const rawCategory = firstString([
+    data.categoryLabel,
+    data.categoryName,
+    data.categoryId,
+    data.category
+  ]);
+  const rawSubCategory = firstString([
+    data.subCategoryLabel,
+    data.subCategoryName,
+    data.subCategoryId,
+    data.subCategory,
+    data.subcategory
+  ]);
+  const time = durationLabel(data.duration, type === "skill" ? "所要時間" : "希望時間")
+    .replace(/^[^:]+: /, "");
+
   return {
     id: normalizedId,
     type,
     label: type === "skill" ? "ForU" : "FromU",
     title,
     description: text(data.description),
+    requiredItems: text(data.requiredItems),
+    precautions: text(data.precautions),
     priceLabel: yenLabel(type === "skill" ? data.price : data.budget ?? data.price),
-    category: firstString([data.categoryLabel, data.categoryName, data.categoryId, data.category]),
-    subCategory: firstString([
-      data.subCategoryLabel,
-      data.subCategoryName,
-      data.subCategoryId,
-      data.subCategory,
-      data.subcategory
-    ]),
+    category: categoryLabel(rawCategory, CATEGORY_LABELS),
+    subCategory: categoryLabel(rawSubCategory, SUB_CATEGORY_LABELS),
     lessonMethodLabel: lessonMethodLabel(data.lessonMethod),
-    durationLabel: durationLabel(data.duration, type === "skill" ? "所要時間" : "希望時間"),
-    deliveryEstimateLabel: type === "skill" ? text(data.deliveryEstimate) : "",
+    timeLabel: time,
+    deliveryLabel:
+      type === "skill"
+        ? time
+          ? ""
+          : formatDeliveryEstimate(data.deliveryEstimate)
+        : time
+          ? ""
+          : formatDesiredDeliveryDate(data.desiredDeliveryDate, data.createdAt),
+    favoriteCount: count(data.favoriteCount),
+    primaryStatLabel:
+      type === "skill"
+        ? `対応中 ${count(data.inProgressTransactionCount)}件`
+        : `応募件数 ${count(data.applicationCount)}件`,
+    secondaryStatLabel:
+      type === "skill"
+        ? `販売実績 ${count(data.completedSalesCount)}件`
+        : recruitmentDeadlineLabel(data),
     images: pickImageUrls(data),
     profile,
     canonicalUrl: `${SITE_ORIGIN}/${type}/${encodeURIComponent(normalizedId)}`
