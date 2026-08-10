@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./news.css";
+import "./listing.css";
 
 export const viewport: Viewport = {
   themeColor: "#FFFFFF"
