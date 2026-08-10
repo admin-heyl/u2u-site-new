@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./news.css";
+import "./listing.css";
 
 export const metadata: Metadata = {
   title: "U⇔U | 学生同士で「できる」がつながるスキルマーケット",
