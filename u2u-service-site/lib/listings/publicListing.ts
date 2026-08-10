@@ -236,7 +236,14 @@ async function publicProfile(uid: string): Promise<PublicProfile> {
 
 function validateListingId(id: string) {
   const normalized = id.trim();
-  if (!normalized || normalized.includes("/") || normalized.length > 160) return "";
+  if (
+    !normalized ||
+    normalized.includes("/") ||
+    normalized.length > 160 ||
+    /^__.*__$/.test(normalized)
+  ) {
+    return "";
+  }
   return normalized;
 }
 
