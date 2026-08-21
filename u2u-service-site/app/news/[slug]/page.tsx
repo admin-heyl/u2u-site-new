@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { NewsStoreBadges } from "@/components/news/NewsStoreBadges";
 import {
   formatNewsDate,
   getPublishedNewsArticle,
@@ -84,7 +85,14 @@ function renderNewsBlock(block: NewsBlock) {
       const strongClassName = block.id === "howto-extra" ? "news-emphasis" : "news-strong";
       return (
         <p className={strongClassName} key={block.id}>
-          <strong>{block.text}</strong>
+          <strong>
+            {block.text.split("\n").map((line, index) => (
+              <span key={`${block.id}-${index}`}>
+                {index > 0 ? <br /> : null}
+                {line}
+              </span>
+            ))}
+          </strong>
         </p>
       );
     }
@@ -126,6 +134,14 @@ function renderNewsBlock(block: NewsBlock) {
         </p>
       );
     }
+    case "store-badges":
+      return (
+        <NewsStoreBadges
+          appStoreHref={block.appStoreHref}
+          googlePlayHref={block.googlePlayHref}
+          key={block.id}
+        />
+      );
     case "note":
       return (
         <aside className="news-note" key={block.id}>

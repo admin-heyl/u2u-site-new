@@ -10,6 +10,11 @@ export type NewsCategory =
 
 export type NewsStatus = "draft" | "preview" | "published";
 
+// Keep these empty until the public store listings can be verified.
+// They are the only link values that need to be filled before publishing the release article.
+const U2U_APP_STORE_URL = "";
+const U2U_GOOGLE_PLAY_URL = "";
+
 type BaseBlock = {
   id: string;
 };
@@ -22,6 +27,11 @@ export type NewsBlock =
   | (BaseBlock & { type: "link"; label: string; href: string })
   | (BaseBlock & { type: "image"; src: string; alt: string; caption?: string })
   | (BaseBlock & { type: "button"; label: string; href: string })
+  | (BaseBlock & {
+      type: "store-badges";
+      appStoreHref: string;
+      googlePlayHref: string;
+    })
   | (BaseBlock & { type: "note"; title: string; items: string[] });
 
 export type NewsArticle = {
@@ -46,6 +56,69 @@ export type NewsArticle = {
 };
 
 export const seedNewsArticles: NewsArticle[] = [
+  {
+    slug: "u2u-service-release",
+    status: "draft",
+    visibility: "listed",
+    category: "リリース情報",
+    title: "学生向けスキルマーケット「U⇔U（ユーーズ）」をリリースしました",
+    publishedAt: "2026-08-12",
+    excerpt:
+      "2026年8月12日の「国際青少年デー」をスタートの日として、学生向けスキルマーケット「U⇔U（ユーーズ）」をリリースしました。",
+    eyecatch: {
+      src: "/images/news/u2u_release_announcement.png",
+      alt: "学生向けスキルマーケット U⇔Uのリリースを知らせるビジュアル"
+    },
+    seo: {
+      title: "学生向けスキルマーケット「U⇔U（ユーーズ）」をリリースしました | U⇔U NEWS",
+      description:
+        "2026年8月12日の国際青少年デーをスタートの日として、学生向けスキルマーケット「U⇔U（ユーーズ）」をリリースしました。",
+      ogImage: "/images/news/u2u_release_announcement.png"
+    },
+    body: [
+      {
+        id: "release-about",
+        type: "p",
+        text: "U⇔Uは、学生のみなさんがそれぞれの「得意」を活かしたり、誰かの力を借りたりできるスキルマーケットです。"
+      },
+      {
+        id: "release-voices",
+        type: "strong",
+        text: "「得意なことを誰かのために活かしたい」\n「自分では難しいことを、得意な人にお願いしたい」"
+      },
+      {
+        id: "release-vision",
+        type: "p",
+        text: "そんな学生同士をつなぎ、一人ひとりの「できること」が誰かの力になる場所を目指しています。"
+      },
+      {
+        id: "release-features",
+        type: "p",
+        text: "U⇔Uでは、自分の得意なことを「ForU」として届けたり、誰かにお願いしたいことを「FromU」として募集したりすることができます。"
+      },
+      {
+        id: "release-future",
+        type: "p",
+        text: "これから、より多くの学生のみなさんに安心して使っていただけるサービスを目指し、U⇔Uを育ててまいります。"
+      },
+      {
+        id: "release-closing",
+        type: "p",
+        text: "今後ともU⇔Uをよろしくお願いいたします。"
+      },
+      {
+        id: "release-download-heading",
+        type: "h2",
+        text: "アプリをダウンロード"
+      },
+      {
+        id: "release-store-badges",
+        type: "store-badges",
+        appStoreHref: U2U_APP_STORE_URL,
+        googlePlayHref: U2U_GOOGLE_PLAY_URL
+      }
+    ]
+  },
   {
     slug: "pre-registration-sns",
     status: "published",
@@ -332,6 +405,10 @@ export async function getPublishedNewsArticles() {
 export async function getPublishedNewsArticle(slug: string) {
   const articles = await getFirestoreNewsArticles("published");
   return articles.find((article) => article.status === "published" && article.slug === slug);
+}
+
+export function getSeedNewsArticle(slug: string) {
+  return seedNewsArticles.find((article) => article.slug === slug);
 }
 
 export function formatNewsDate(date: string) {

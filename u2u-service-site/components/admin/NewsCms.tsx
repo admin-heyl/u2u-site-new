@@ -43,6 +43,7 @@ const blockTypes: NewsBlock["type"][] = [
   "ol",
   "link",
   "button",
+  "store-badges",
   "image",
   "note"
 ];
@@ -71,6 +72,7 @@ function createBlock(type: NewsBlock["type"]): NewsBlock {
   if (type === "ul" || type === "ol") return { id, type, items: [""] };
   if (type === "image") return { id, type, src: "", alt: "", caption: "" };
   if (type === "button" || type === "link") return { id, type, label: "", href: "" };
+  if (type === "store-badges") return { id, type, appStoreHref: "", googlePlayHref: "" };
   if (type === "note") return { id, type, title: "", items: [""] };
 
   return { id, type, text: "" };
@@ -527,6 +529,20 @@ function BlockEditor({
           <input value={block.alt} onChange={(event) => onChange({ ...block, alt: event.target.value })} placeholder="alt" />
           <input value={block.caption || ""} onChange={(event) => onChange({ ...block, caption: event.target.value })} placeholder="キャプション" />
         </>
+      ) : null}
+      {block.type === "store-badges" ? (
+        <div className="admin-inline-fields">
+          <input
+            value={block.appStoreHref}
+            onChange={(event) => onChange({ ...block, appStoreHref: event.target.value })}
+            placeholder="App Store URL"
+          />
+          <input
+            value={block.googlePlayHref}
+            onChange={(event) => onChange({ ...block, googlePlayHref: event.target.value })}
+            placeholder="Google Play URL"
+          />
+        </div>
       ) : null}
       {block.type === "note" ? (
         <input value={block.title} onChange={(event) => onChange({ ...block, title: event.target.value })} placeholder="注意事項タイトル" />

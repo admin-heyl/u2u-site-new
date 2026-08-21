@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import { NewsStoreBadges } from "@/components/news/NewsStoreBadges";
 import { getFirebaseServices } from "@/lib/firebase/client";
 import { formatNewsDate, type NewsArticle, type NewsBlock } from "@/lib/news";
 
@@ -52,7 +53,14 @@ function renderNewsBlock(block: NewsBlock) {
       const strongClassName = block.id === "howto-extra" ? "news-emphasis" : "news-strong";
       return (
         <p className={strongClassName} key={block.id}>
-          <strong>{block.text}</strong>
+          <strong>
+            {block.text.split("\n").map((line, index) => (
+              <span key={`${block.id}-${index}`}>
+                {index > 0 ? <br /> : null}
+                {line}
+              </span>
+            ))}
+          </strong>
         </p>
       );
     }
@@ -94,6 +102,14 @@ function renderNewsBlock(block: NewsBlock) {
         </p>
       );
     }
+    case "store-badges":
+      return (
+        <NewsStoreBadges
+          appStoreHref={block.appStoreHref}
+          googlePlayHref={block.googlePlayHref}
+          key={block.id}
+        />
+      );
     case "note":
       return (
         <aside className="news-note" key={block.id}>
@@ -138,11 +154,19 @@ function renderExcerptLine(line: string) {
   );
 }
 
-export function NewsPreviewClient({ slug }: { slug: string }) {
-  const [article, setArticle] = useState<NewsArticle | null>(null);
-  const [status, setStatus] = useState("読み込み中...");
+export function NewsPreviewClient({
+  initialArticle,
+  slug
+}: {
+  initialArticle?: NewsArticle;
+  slug: string;
+}) {
+  const [article, setArticle] = useState<NewsArticle | null>(initialArticle || null);
+  const [status, setStatus] = useState(initialArticle ? "" : "読み込み中...");
 
   useEffect(() => {
+    if (initialArticle) return;
+
     const { auth, db } = getFirebaseServices();
 
     return onAuthStateChanged(auth, async (user: User | null) => {
@@ -160,7 +184,7 @@ export function NewsPreviewClient({ slug }: { slug: string }) {
       setArticle(snapshot.data() as NewsArticle);
       setStatus("");
     });
-  }, [slug]);
+  }, [initialArticle, slug]);
 
   if (!article) {
     return (
