@@ -59,7 +59,7 @@ export type NewsArticle = {
 export const seedNewsArticles: NewsArticle[] = [
   {
     slug: "service-launch",
-    status: "draft",
+    status: "published",
     visibility: "listed",
     category: "リリース情報",
     title: "学生向けスキルマーケット「U⇔U（ユーーズ）」をリリースしました",
