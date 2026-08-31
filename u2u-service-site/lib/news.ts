@@ -10,10 +10,11 @@ export type NewsCategory =
 
 export type NewsStatus = "draft" | "preview" | "published";
 
-// Keep these empty until the public store listings can be verified.
-// They are the only link values that need to be filled before publishing the release article.
-const U2U_APP_STORE_URL = "";
-const U2U_GOOGLE_PLAY_URL = "";
+// Official store destinations used by the release article's badges.
+const U2U_APP_STORE_URL =
+  "https://apps.apple.com/jp/app/%E3%83%A6%E3%83%BC%E3%83%BC%E3%82%BA/id6772195733";
+const U2U_GOOGLE_PLAY_URL =
+  "https://play.google.com/store/apps/details?id=jp.co.heyl.u2u&pcampaignid=web_share";
 
 type BaseBlock = {
   id: string;
@@ -57,7 +58,7 @@ export type NewsArticle = {
 
 export const seedNewsArticles: NewsArticle[] = [
   {
-    slug: "u2u-service-release",
+    slug: "service-launch",
     status: "draft",
     visibility: "listed",
     category: "リリース情報",
